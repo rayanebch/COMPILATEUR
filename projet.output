@@ -1,0 +1,2596 @@
+Terminals unused in grammar
+
+   err
+
+
+Grammar
+
+    0 $accept: S $end
+
+    1 S: idf acco mc_var acco DEC accf mc_code acco list_inst accf accf
+
+    2 DEC: simpleDEC DEC
+    3    | TabDEC DEC
+    4    | ConstDEC DEC
+    5    | STRUCTURE DEC
+    6    | StructDEC DEC
+    7    | /* empty */
+
+    8 simpleDEC: mc_integer LISTVARINT pvg
+    9          | mc_float LISTVARFLOAT pvg
+
+   10 TabDEC: mc_integer idf crochero entier crocherf pvg
+   11       | mc_float idf crochero entier crocherf pvg
+
+   12 ConstDEC: mc_const idf pvg
+   13         | mc_const idf aff entier pvg
+   14         | mc_const idf aff reel pvg
+
+   15 STRUCTURE: mc_struct acco DEC accf idf pvg
+
+   16 StructDEC: mc_struct idf LISTSTRUCT pvg
+
+   17 LISTVARINT: idf
+   18           | idf vig LISTVARINT
+
+   19 LISTVARFLOAT: idf
+   20             | idf vig LISTVARFLOAT
+
+   21 LISTSTRUCT: idf
+   22           | idf vig LISTSTRUCT
+   23           | idf crochero entier crocherf
+
+   24 list_inst: INST list_inst
+   25          | /* empty */
+
+   26 INST: affectation
+   27     | CONDITION
+   28     | BOUCLEFOR
+   29     | BOUCLEWHILE
+
+   30 affectation: idf aff expressionAr pvg
+   31            | idf pts idf aff expressionAr pvg
+   32            | idf crochero idf crocherf aff expressionAr pvg
+   33            | idf crochero entier crocherf aff expressionAr pvg
+
+   34 expressionAr: expressionAr add expressionAr
+   35             | expressionAr sub expressionAr
+   36             | expressionAr division expressionAr
+   37             | expressionAr mul expressionAr
+   38             | idf
+   39             | entier
+   40             | reel
+   41             | idf crochero entier crocherf
+   42             | idf crochero idf crocherf
+   43             | idf pts idf
+   44             | pro expressionAr prf
+
+   45 CONDITION: IF list_inst ACCF_SIMPLE
+   46          | IF list_inst ACCF_IF ELSE list_inst ACCF_ELSE
+
+   47 IF: mc_if pro cond prf acco
+
+   48 ACCF_SIMPLE: accf
+
+   49 ELSE: mc_else acco
+
+   50 ACCF_IF: accf
+
+   51 ACCF_ELSE: accf
+
+   52 cond: comparaison
+   53     | expressionLog
+
+   54 comparaison: expressionAr sup expressionAr
+   55            | expressionAr inf expressionAr
+   56            | expressionAr egal expressionAr
+   57            | expressionAr diff expressionAr
+   58            | expressionAr supegl expressionAr
+   59            | expressionAr infegl expressionAr
+
+   60 expressionLog: pro comparaison prf operateurLog pro comparaison prf
+   61              | expressionAr operateurLog expressionAr
+   62              | NOT expressionAr
+
+   63 operateurLog: ET
+   64             | OU
+
+   65 BOUCLEFOR: FOR list_inst ACCF1
+
+   66 FOR: mc_for pro idf dpts entier dpts entier dpts idf prf acco
+
+   67 ACCF1: accf
+
+   68 BOUCLEWHILE: WHILE WLS list_inst ACCF
+
+   69 WHILE: mc_while pro
+
+   70 WLS: cond prf acco
+
+   71 ACCF: accf
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+mc_integer (258) 8 10
+mc_float (259) 9 11
+mc_const (260) 12 13 14
+mc_if (261) 47
+mc_else (262) 49
+mc_for (263) 66
+mc_while (264) 69
+mc_struct (265) 15 16
+idf (266) 1 10 11 12 13 14 15 16 17 18 19 20 21 22 23 30 31 32 33 38
+    41 42 43 66
+entier (267) 10 11 13 23 33 39 41 66
+reel (268) 14 40
+aff (269) 13 14 30 31 32 33
+pro (270) 44 47 60 66 69
+prf (271) 44 47 60 66 70
+add (272) 34
+sub (273) 35
+division (274) 36
+mul (275) 37
+pvg (276) 8 9 10 11 12 13 14 15 16 30 31 32 33
+vig (277) 18 20 22
+pts (278) 31 43
+dpts (279) 66
+acco (280) 1 15 47 49 66 70
+accf (281) 1 15 48 50 51 67 71
+ET (282) 63
+OU (283) 64
+NOT (284) 62
+inf (285) 55
+sup (286) 54
+infegl (287) 59
+supegl (288) 58
+egal (289) 56
+diff (290) 57
+err (291)
+mc_var (292) 1
+mc_code (293) 1
+crochero (294) 10 11 23 32 33 41 42
+crocherf (295) 10 11 23 32 33 41 42
+
+
+Nonterminals, with rules where they appear
+
+$accept (41)
+    on left: 0
+S (42)
+    on left: 1, on right: 0
+DEC (43)
+    on left: 2 3 4 5 6 7, on right: 1 2 3 4 5 6 15
+simpleDEC (44)
+    on left: 8 9, on right: 2
+TabDEC (45)
+    on left: 10 11, on right: 3
+ConstDEC (46)
+    on left: 12 13 14, on right: 4
+STRUCTURE (47)
+    on left: 15, on right: 5
+StructDEC (48)
+    on left: 16, on right: 6
+LISTVARINT (49)
+    on left: 17 18, on right: 8 18
+LISTVARFLOAT (50)
+    on left: 19 20, on right: 9 20
+LISTSTRUCT (51)
+    on left: 21 22 23, on right: 16 22
+list_inst (52)
+    on left: 24 25, on right: 1 24 45 46 65 68
+INST (53)
+    on left: 26 27 28 29, on right: 24
+affectation (54)
+    on left: 30 31 32 33, on right: 26
+expressionAr (55)
+    on left: 34 35 36 37 38 39 40 41 42 43 44, on right: 30 31 32 33
+    34 35 36 37 44 54 55 56 57 58 59 61 62
+CONDITION (56)
+    on left: 45 46, on right: 27
+IF (57)
+    on left: 47, on right: 45 46
+ACCF_SIMPLE (58)
+    on left: 48, on right: 45
+ELSE (59)
+    on left: 49, on right: 46
+ACCF_IF (60)
+    on left: 50, on right: 46
+ACCF_ELSE (61)
+    on left: 51, on right: 46
+cond (62)
+    on left: 52 53, on right: 47 70
+comparaison (63)
+    on left: 54 55 56 57 58 59, on right: 52 60
+expressionLog (64)
+    on left: 60 61 62, on right: 53
+operateurLog (65)
+    on left: 63 64, on right: 60 61
+BOUCLEFOR (66)
+    on left: 65, on right: 28
+FOR (67)
+    on left: 66, on right: 65
+ACCF1 (68)
+    on left: 67, on right: 65
+BOUCLEWHILE (69)
+    on left: 68, on right: 29
+WHILE (70)
+    on left: 69, on right: 68
+WLS (71)
+    on left: 70, on right: 68
+ACCF (72)
+    on left: 71, on right: 68
+
+
+State 0
+
+    0 $accept: . S $end
+    1 S: . idf acco mc_var acco DEC accf mc_code acco list_inst accf accf
+
+    idf  shift, and go to state 1
+
+    S  go to state 2
+
+
+State 1
+
+    1 S: idf . acco mc_var acco DEC accf mc_code acco list_inst accf accf
+
+    acco  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: S . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 S: idf acco . mc_var acco DEC accf mc_code acco list_inst accf accf
+
+    mc_var  shift, and go to state 5
+
+
+State 4
+
+    0 $accept: S $end .
+
+    $default  accept
+
+
+State 5
+
+    1 S: idf acco mc_var . acco DEC accf mc_code acco list_inst accf accf
+
+    acco  shift, and go to state 6
+
+
+State 6
+
+    1 S: idf acco mc_var acco . DEC accf mc_code acco list_inst accf accf
+    2 DEC: . simpleDEC DEC
+    3    | . TabDEC DEC
+    4    | . ConstDEC DEC
+    5    | . STRUCTURE DEC
+    6    | . StructDEC DEC
+    7    | .
+    8 simpleDEC: . mc_integer LISTVARINT pvg
+    9          | . mc_float LISTVARFLOAT pvg
+   10 TabDEC: . mc_integer idf crochero entier crocherf pvg
+   11       | . mc_float idf crochero entier crocherf pvg
+   12 ConstDEC: . mc_const idf pvg
+   13         | . mc_const idf aff entier pvg
+   14         | . mc_const idf aff reel pvg
+   15 STRUCTURE: . mc_struct acco DEC accf idf pvg
+   16 StructDEC: . mc_struct idf LISTSTRUCT pvg
+
+    mc_integer  shift, and go to state 7
+    mc_float    shift, and go to state 8
+    mc_const    shift, and go to state 9
+    mc_struct   shift, and go to state 10
+
+    $default  reduce using rule 7 (DEC)
+
+    DEC        go to state 11
+    simpleDEC  go to state 12
+    TabDEC     go to state 13
+    ConstDEC   go to state 14
+    STRUCTURE  go to state 15
+    StructDEC  go to state 16
+
+
+State 7
+
+    8 simpleDEC: mc_integer . LISTVARINT pvg
+   10 TabDEC: mc_integer . idf crochero entier crocherf pvg
+   17 LISTVARINT: . idf
+   18           | . idf vig LISTVARINT
+
+    idf  shift, and go to state 17
+
+    LISTVARINT  go to state 18
+
+
+State 8
+
+    9 simpleDEC: mc_float . LISTVARFLOAT pvg
+   11 TabDEC: mc_float . idf crochero entier crocherf pvg
+   19 LISTVARFLOAT: . idf
+   20             | . idf vig LISTVARFLOAT
+
+    idf  shift, and go to state 19
+
+    LISTVARFLOAT  go to state 20
+
+
+State 9
+
+   12 ConstDEC: mc_const . idf pvg
+   13         | mc_const . idf aff entier pvg
+   14         | mc_const . idf aff reel pvg
+
+    idf  shift, and go to state 21
+
+
+State 10
+
+   15 STRUCTURE: mc_struct . acco DEC accf idf pvg
+   16 StructDEC: mc_struct . idf LISTSTRUCT pvg
+
+    idf   shift, and go to state 22
+    acco  shift, and go to state 23
+
+
+State 11
+
+    1 S: idf acco mc_var acco DEC . accf mc_code acco list_inst accf accf
+
+    accf  shift, and go to state 24
+
+
+State 12
+
+    2 DEC: . simpleDEC DEC
+    2    | simpleDEC . DEC
+    3    | . TabDEC DEC
+    4    | . ConstDEC DEC
+    5    | . STRUCTURE DEC
+    6    | . StructDEC DEC
+    7    | .
+    8 simpleDEC: . mc_integer LISTVARINT pvg
+    9          | . mc_float LISTVARFLOAT pvg
+   10 TabDEC: . mc_integer idf crochero entier crocherf pvg
+   11       | . mc_float idf crochero entier crocherf pvg
+   12 ConstDEC: . mc_const idf pvg
+   13         | . mc_const idf aff entier pvg
+   14         | . mc_const idf aff reel pvg
+   15 STRUCTURE: . mc_struct acco DEC accf idf pvg
+   16 StructDEC: . mc_struct idf LISTSTRUCT pvg
+
+    mc_integer  shift, and go to state 7
+    mc_float    shift, and go to state 8
+    mc_const    shift, and go to state 9
+    mc_struct   shift, and go to state 10
+
+    $default  reduce using rule 7 (DEC)
+
+    DEC        go to state 25
+    simpleDEC  go to state 12
+    TabDEC     go to state 13
+    ConstDEC   go to state 14
+    STRUCTURE  go to state 15
+    StructDEC  go to state 16
+
+
+State 13
+
+    2 DEC: . simpleDEC DEC
+    3    | . TabDEC DEC
+    3    | TabDEC . DEC
+    4    | . ConstDEC DEC
+    5    | . STRUCTURE DEC
+    6    | . StructDEC DEC
+    7    | .
+    8 simpleDEC: . mc_integer LISTVARINT pvg
+    9          | . mc_float LISTVARFLOAT pvg
+   10 TabDEC: . mc_integer idf crochero entier crocherf pvg
+   11       | . mc_float idf crochero entier crocherf pvg
+   12 ConstDEC: . mc_const idf pvg
+   13         | . mc_const idf aff entier pvg
+   14         | . mc_const idf aff reel pvg
+   15 STRUCTURE: . mc_struct acco DEC accf idf pvg
+   16 StructDEC: . mc_struct idf LISTSTRUCT pvg
+
+    mc_integer  shift, and go to state 7
+    mc_float    shift, and go to state 8
+    mc_const    shift, and go to state 9
+    mc_struct   shift, and go to state 10
+
+    $default  reduce using rule 7 (DEC)
+
+    DEC        go to state 26
+    simpleDEC  go to state 12
+    TabDEC     go to state 13
+    ConstDEC   go to state 14
+    STRUCTURE  go to state 15
+    StructDEC  go to state 16
+
+
+State 14
+
+    2 DEC: . simpleDEC DEC
+    3    | . TabDEC DEC
+    4    | . ConstDEC DEC
+    4    | ConstDEC . DEC
+    5    | . STRUCTURE DEC
+    6    | . StructDEC DEC
+    7    | .
+    8 simpleDEC: . mc_integer LISTVARINT pvg
+    9          | . mc_float LISTVARFLOAT pvg
+   10 TabDEC: . mc_integer idf crochero entier crocherf pvg
+   11       | . mc_float idf crochero entier crocherf pvg
+   12 ConstDEC: . mc_const idf pvg
+   13         | . mc_const idf aff entier pvg
+   14         | . mc_const idf aff reel pvg
+   15 STRUCTURE: . mc_struct acco DEC accf idf pvg
+   16 StructDEC: . mc_struct idf LISTSTRUCT pvg
+
+    mc_integer  shift, and go to state 7
+    mc_float    shift, and go to state 8
+    mc_const    shift, and go to state 9
+    mc_struct   shift, and go to state 10
+
+    $default  reduce using rule 7 (DEC)
+
+    DEC        go to state 27
+    simpleDEC  go to state 12
+    TabDEC     go to state 13
+    ConstDEC   go to state 14
+    STRUCTURE  go to state 15
+    StructDEC  go to state 16
+
+
+State 15
+
+    2 DEC: . simpleDEC DEC
+    3    | . TabDEC DEC
+    4    | . ConstDEC DEC
+    5    | . STRUCTURE DEC
+    5    | STRUCTURE . DEC
+    6    | . StructDEC DEC
+    7    | .
+    8 simpleDEC: . mc_integer LISTVARINT pvg
+    9          | . mc_float LISTVARFLOAT pvg
+   10 TabDEC: . mc_integer idf crochero entier crocherf pvg
+   11       | . mc_float idf crochero entier crocherf pvg
+   12 ConstDEC: . mc_const idf pvg
+   13         | . mc_const idf aff entier pvg
+   14         | . mc_const idf aff reel pvg
+   15 STRUCTURE: . mc_struct acco DEC accf idf pvg
+   16 StructDEC: . mc_struct idf LISTSTRUCT pvg
+
+    mc_integer  shift, and go to state 7
+    mc_float    shift, and go to state 8
+    mc_const    shift, and go to state 9
+    mc_struct   shift, and go to state 10
+
+    $default  reduce using rule 7 (DEC)
+
+    DEC        go to state 28
+    simpleDEC  go to state 12
+    TabDEC     go to state 13
+    ConstDEC   go to state 14
+    STRUCTURE  go to state 15
+    StructDEC  go to state 16
+
+
+State 16
+
+    2 DEC: . simpleDEC DEC
+    3    | . TabDEC DEC
+    4    | . ConstDEC DEC
+    5    | . STRUCTURE DEC
+    6    | . StructDEC DEC
+    6    | StructDEC . DEC
+    7    | .
+    8 simpleDEC: . mc_integer LISTVARINT pvg
+    9          | . mc_float LISTVARFLOAT pvg
+   10 TabDEC: . mc_integer idf crochero entier crocherf pvg
+   11       | . mc_float idf crochero entier crocherf pvg
+   12 ConstDEC: . mc_const idf pvg
+   13         | . mc_const idf aff entier pvg
+   14         | . mc_const idf aff reel pvg
+   15 STRUCTURE: . mc_struct acco DEC accf idf pvg
+   16 StructDEC: . mc_struct idf LISTSTRUCT pvg
+
+    mc_integer  shift, and go to state 7
+    mc_float    shift, and go to state 8
+    mc_const    shift, and go to state 9
+    mc_struct   shift, and go to state 10
+
+    $default  reduce using rule 7 (DEC)
+
+    DEC        go to state 29
+    simpleDEC  go to state 12
+    TabDEC     go to state 13
+    ConstDEC   go to state 14
+    STRUCTURE  go to state 15
+    StructDEC  go to state 16
+
+
+State 17
+
+   10 TabDEC: mc_integer idf . crochero entier crocherf pvg
+   17 LISTVARINT: idf .
+   18           | idf . vig LISTVARINT
+
+    vig       shift, and go to state 30
+    crochero  shift, and go to state 31
+
+    $default  reduce using rule 17 (LISTVARINT)
+
+
+State 18
+
+    8 simpleDEC: mc_integer LISTVARINT . pvg
+
+    pvg  shift, and go to state 32
+
+
+State 19
+
+   11 TabDEC: mc_float idf . crochero entier crocherf pvg
+   19 LISTVARFLOAT: idf .
+   20             | idf . vig LISTVARFLOAT
+
+    vig       shift, and go to state 33
+    crochero  shift, and go to state 34
+
+    $default  reduce using rule 19 (LISTVARFLOAT)
+
+
+State 20
+
+    9 simpleDEC: mc_float LISTVARFLOAT . pvg
+
+    pvg  shift, and go to state 35
+
+
+State 21
+
+   12 ConstDEC: mc_const idf . pvg
+   13         | mc_const idf . aff entier pvg
+   14         | mc_const idf . aff reel pvg
+
+    aff  shift, and go to state 36
+    pvg  shift, and go to state 37
+
+
+State 22
+
+   16 StructDEC: mc_struct idf . LISTSTRUCT pvg
+   21 LISTSTRUCT: . idf
+   22           | . idf vig LISTSTRUCT
+   23           | . idf crochero entier crocherf
+
+    idf  shift, and go to state 38
+
+    LISTSTRUCT  go to state 39
+
+
+State 23
+
+    2 DEC: . simpleDEC DEC
+    3    | . TabDEC DEC
+    4    | . ConstDEC DEC
+    5    | . STRUCTURE DEC
+    6    | . StructDEC DEC
+    7    | .
+    8 simpleDEC: . mc_integer LISTVARINT pvg
+    9          | . mc_float LISTVARFLOAT pvg
+   10 TabDEC: . mc_integer idf crochero entier crocherf pvg
+   11       | . mc_float idf crochero entier crocherf pvg
+   12 ConstDEC: . mc_const idf pvg
+   13         | . mc_const idf aff entier pvg
+   14         | . mc_const idf aff reel pvg
+   15 STRUCTURE: . mc_struct acco DEC accf idf pvg
+   15          | mc_struct acco . DEC accf idf pvg
+   16 StructDEC: . mc_struct idf LISTSTRUCT pvg
+
+    mc_integer  shift, and go to state 7
+    mc_float    shift, and go to state 8
+    mc_const    shift, and go to state 9
+    mc_struct   shift, and go to state 10
+
+    $default  reduce using rule 7 (DEC)
+
+    DEC        go to state 40
+    simpleDEC  go to state 12
+    TabDEC     go to state 13
+    ConstDEC   go to state 14
+    STRUCTURE  go to state 15
+    StructDEC  go to state 16
+
+
+State 24
+
+    1 S: idf acco mc_var acco DEC accf . mc_code acco list_inst accf accf
+
+    mc_code  shift, and go to state 41
+
+
+State 25
+
+    2 DEC: simpleDEC DEC .
+
+    $default  reduce using rule 2 (DEC)
+
+
+State 26
+
+    3 DEC: TabDEC DEC .
+
+    $default  reduce using rule 3 (DEC)
+
+
+State 27
+
+    4 DEC: ConstDEC DEC .
+
+    $default  reduce using rule 4 (DEC)
+
+
+State 28
+
+    5 DEC: STRUCTURE DEC .
+
+    $default  reduce using rule 5 (DEC)
+
+
+State 29
+
+    6 DEC: StructDEC DEC .
+
+    $default  reduce using rule 6 (DEC)
+
+
+State 30
+
+   17 LISTVARINT: . idf
+   18           | . idf vig LISTVARINT
+   18           | idf vig . LISTVARINT
+
+    idf  shift, and go to state 42
+
+    LISTVARINT  go to state 43
+
+
+State 31
+
+   10 TabDEC: mc_integer idf crochero . entier crocherf pvg
+
+    entier  shift, and go to state 44
+
+
+State 32
+
+    8 simpleDEC: mc_integer LISTVARINT pvg .
+
+    $default  reduce using rule 8 (simpleDEC)
+
+
+State 33
+
+   19 LISTVARFLOAT: . idf
+   20             | . idf vig LISTVARFLOAT
+   20             | idf vig . LISTVARFLOAT
+
+    idf  shift, and go to state 45
+
+    LISTVARFLOAT  go to state 46
+
+
+State 34
+
+   11 TabDEC: mc_float idf crochero . entier crocherf pvg
+
+    entier  shift, and go to state 47
+
+
+State 35
+
+    9 simpleDEC: mc_float LISTVARFLOAT pvg .
+
+    $default  reduce using rule 9 (simpleDEC)
+
+
+State 36
+
+   13 ConstDEC: mc_const idf aff . entier pvg
+   14         | mc_const idf aff . reel pvg
+
+    entier  shift, and go to state 48
+    reel    shift, and go to state 49
+
+
+State 37
+
+   12 ConstDEC: mc_const idf pvg .
+
+    $default  reduce using rule 12 (ConstDEC)
+
+
+State 38
+
+   21 LISTSTRUCT: idf .
+   22           | idf . vig LISTSTRUCT
+   23           | idf . crochero entier crocherf
+
+    vig       shift, and go to state 50
+    crochero  shift, and go to state 51
+
+    $default  reduce using rule 21 (LISTSTRUCT)
+
+
+State 39
+
+   16 StructDEC: mc_struct idf LISTSTRUCT . pvg
+
+    pvg  shift, and go to state 52
+
+
+State 40
+
+   15 STRUCTURE: mc_struct acco DEC . accf idf pvg
+
+    accf  shift, and go to state 53
+
+
+State 41
+
+    1 S: idf acco mc_var acco DEC accf mc_code . acco list_inst accf accf
+
+    acco  shift, and go to state 54
+
+
+State 42
+
+   17 LISTVARINT: idf .
+   18           | idf . vig LISTVARINT
+
+    vig  shift, and go to state 30
+
+    $default  reduce using rule 17 (LISTVARINT)
+
+
+State 43
+
+   18 LISTVARINT: idf vig LISTVARINT .
+
+    $default  reduce using rule 18 (LISTVARINT)
+
+
+State 44
+
+   10 TabDEC: mc_integer idf crochero entier . crocherf pvg
+
+    crocherf  shift, and go to state 55
+
+
+State 45
+
+   19 LISTVARFLOAT: idf .
+   20             | idf . vig LISTVARFLOAT
+
+    vig  shift, and go to state 33
+
+    $default  reduce using rule 19 (LISTVARFLOAT)
+
+
+State 46
+
+   20 LISTVARFLOAT: idf vig LISTVARFLOAT .
+
+    $default  reduce using rule 20 (LISTVARFLOAT)
+
+
+State 47
+
+   11 TabDEC: mc_float idf crochero entier . crocherf pvg
+
+    crocherf  shift, and go to state 56
+
+
+State 48
+
+   13 ConstDEC: mc_const idf aff entier . pvg
+
+    pvg  shift, and go to state 57
+
+
+State 49
+
+   14 ConstDEC: mc_const idf aff reel . pvg
+
+    pvg  shift, and go to state 58
+
+
+State 50
+
+   21 LISTSTRUCT: . idf
+   22           | . idf vig LISTSTRUCT
+   22           | idf vig . LISTSTRUCT
+   23           | . idf crochero entier crocherf
+
+    idf  shift, and go to state 38
+
+    LISTSTRUCT  go to state 59
+
+
+State 51
+
+   23 LISTSTRUCT: idf crochero . entier crocherf
+
+    entier  shift, and go to state 60
+
+
+State 52
+
+   16 StructDEC: mc_struct idf LISTSTRUCT pvg .
+
+    $default  reduce using rule 16 (StructDEC)
+
+
+State 53
+
+   15 STRUCTURE: mc_struct acco DEC accf . idf pvg
+
+    idf  shift, and go to state 61
+
+
+State 54
+
+    1 S: idf acco mc_var acco DEC accf mc_code acco . list_inst accf accf
+   24 list_inst: . INST list_inst
+   25          | .
+   26 INST: . affectation
+   27     | . CONDITION
+   28     | . BOUCLEFOR
+   29     | . BOUCLEWHILE
+   30 affectation: . idf aff expressionAr pvg
+   31            | . idf pts idf aff expressionAr pvg
+   32            | . idf crochero idf crocherf aff expressionAr pvg
+   33            | . idf crochero entier crocherf aff expressionAr pvg
+   45 CONDITION: . IF list_inst ACCF_SIMPLE
+   46          | . IF list_inst ACCF_IF ELSE list_inst ACCF_ELSE
+   47 IF: . mc_if pro cond prf acco
+   65 BOUCLEFOR: . FOR list_inst ACCF1
+   66 FOR: . mc_for pro idf dpts entier dpts entier dpts idf prf acco
+   68 BOUCLEWHILE: . WHILE WLS list_inst ACCF
+   69 WHILE: . mc_while pro
+
+    mc_if     shift, and go to state 62
+    mc_for    shift, and go to state 63
+    mc_while  shift, and go to state 64
+    idf       shift, and go to state 65
+
+    $default  reduce using rule 25 (list_inst)
+
+    list_inst    go to state 66
+    INST         go to state 67
+    affectation  go to state 68
+    CONDITION    go to state 69
+    IF           go to state 70
+    BOUCLEFOR    go to state 71
+    FOR          go to state 72
+    BOUCLEWHILE  go to state 73
+    WHILE        go to state 74
+
+
+State 55
+
+   10 TabDEC: mc_integer idf crochero entier crocherf . pvg
+
+    pvg  shift, and go to state 75
+
+
+State 56
+
+   11 TabDEC: mc_float idf crochero entier crocherf . pvg
+
+    pvg  shift, and go to state 76
+
+
+State 57
+
+   13 ConstDEC: mc_const idf aff entier pvg .
+
+    $default  reduce using rule 13 (ConstDEC)
+
+
+State 58
+
+   14 ConstDEC: mc_const idf aff reel pvg .
+
+    $default  reduce using rule 14 (ConstDEC)
+
+
+State 59
+
+   22 LISTSTRUCT: idf vig LISTSTRUCT .
+
+    $default  reduce using rule 22 (LISTSTRUCT)
+
+
+State 60
+
+   23 LISTSTRUCT: idf crochero entier . crocherf
+
+    crocherf  shift, and go to state 77
+
+
+State 61
+
+   15 STRUCTURE: mc_struct acco DEC accf idf . pvg
+
+    pvg  shift, and go to state 78
+
+
+State 62
+
+   47 IF: mc_if . pro cond prf acco
+
+    pro  shift, and go to state 79
+
+
+State 63
+
+   66 FOR: mc_for . pro idf dpts entier dpts entier dpts idf prf acco
+
+    pro  shift, and go to state 80
+
+
+State 64
+
+   69 WHILE: mc_while . pro
+
+    pro  shift, and go to state 81
+
+
+State 65
+
+   30 affectation: idf . aff expressionAr pvg
+   31            | idf . pts idf aff expressionAr pvg
+   32            | idf . crochero idf crocherf aff expressionAr pvg
+   33            | idf . crochero entier crocherf aff expressionAr pvg
+
+    aff       shift, and go to state 82
+    pts       shift, and go to state 83
+    crochero  shift, and go to state 84
+
+
+State 66
+
+    1 S: idf acco mc_var acco DEC accf mc_code acco list_inst . accf accf
+
+    accf  shift, and go to state 85
+
+
+State 67
+
+   24 list_inst: . INST list_inst
+   24          | INST . list_inst
+   25          | .
+   26 INST: . affectation
+   27     | . CONDITION
+   28     | . BOUCLEFOR
+   29     | . BOUCLEWHILE
+   30 affectation: . idf aff expressionAr pvg
+   31            | . idf pts idf aff expressionAr pvg
+   32            | . idf crochero idf crocherf aff expressionAr pvg
+   33            | . idf crochero entier crocherf aff expressionAr pvg
+   45 CONDITION: . IF list_inst ACCF_SIMPLE
+   46          | . IF list_inst ACCF_IF ELSE list_inst ACCF_ELSE
+   47 IF: . mc_if pro cond prf acco
+   65 BOUCLEFOR: . FOR list_inst ACCF1
+   66 FOR: . mc_for pro idf dpts entier dpts entier dpts idf prf acco
+   68 BOUCLEWHILE: . WHILE WLS list_inst ACCF
+   69 WHILE: . mc_while pro
+
+    mc_if     shift, and go to state 62
+    mc_for    shift, and go to state 63
+    mc_while  shift, and go to state 64
+    idf       shift, and go to state 65
+
+    $default  reduce using rule 25 (list_inst)
+
+    list_inst    go to state 86
+    INST         go to state 67
+    affectation  go to state 68
+    CONDITION    go to state 69
+    IF           go to state 70
+    BOUCLEFOR    go to state 71
+    FOR          go to state 72
+    BOUCLEWHILE  go to state 73
+    WHILE        go to state 74
+
+
+State 68
+
+   26 INST: affectation .
+
+    $default  reduce using rule 26 (INST)
+
+
+State 69
+
+   27 INST: CONDITION .
+
+    $default  reduce using rule 27 (INST)
+
+
+State 70
+
+   24 list_inst: . INST list_inst
+   25          | .
+   26 INST: . affectation
+   27     | . CONDITION
+   28     | . BOUCLEFOR
+   29     | . BOUCLEWHILE
+   30 affectation: . idf aff expressionAr pvg
+   31            | . idf pts idf aff expressionAr pvg
+   32            | . idf crochero idf crocherf aff expressionAr pvg
+   33            | . idf crochero entier crocherf aff expressionAr pvg
+   45 CONDITION: . IF list_inst ACCF_SIMPLE
+   45          | IF . list_inst ACCF_SIMPLE
+   46          | . IF list_inst ACCF_IF ELSE list_inst ACCF_ELSE
+   46          | IF . list_inst ACCF_IF ELSE list_inst ACCF_ELSE
+   47 IF: . mc_if pro cond prf acco
+   65 BOUCLEFOR: . FOR list_inst ACCF1
+   66 FOR: . mc_for pro idf dpts entier dpts entier dpts idf prf acco
+   68 BOUCLEWHILE: . WHILE WLS list_inst ACCF
+   69 WHILE: . mc_while pro
+
+    mc_if     shift, and go to state 62
+    mc_for    shift, and go to state 63
+    mc_while  shift, and go to state 64
+    idf       shift, and go to state 65
+
+    $default  reduce using rule 25 (list_inst)
+
+    list_inst    go to state 87
+    INST         go to state 67
+    affectation  go to state 68
+    CONDITION    go to state 69
+    IF           go to state 70
+    BOUCLEFOR    go to state 71
+    FOR          go to state 72
+    BOUCLEWHILE  go to state 73
+    WHILE        go to state 74
+
+
+State 71
+
+   28 INST: BOUCLEFOR .
+
+    $default  reduce using rule 28 (INST)
+
+
+State 72
+
+   24 list_inst: . INST list_inst
+   25          | .
+   26 INST: . affectation
+   27     | . CONDITION
+   28     | . BOUCLEFOR
+   29     | . BOUCLEWHILE
+   30 affectation: . idf aff expressionAr pvg
+   31            | . idf pts idf aff expressionAr pvg
+   32            | . idf crochero idf crocherf aff expressionAr pvg
+   33            | . idf crochero entier crocherf aff expressionAr pvg
+   45 CONDITION: . IF list_inst ACCF_SIMPLE
+   46          | . IF list_inst ACCF_IF ELSE list_inst ACCF_ELSE
+   47 IF: . mc_if pro cond prf acco
+   65 BOUCLEFOR: . FOR list_inst ACCF1
+   65          | FOR . list_inst ACCF1
+   66 FOR: . mc_for pro idf dpts entier dpts entier dpts idf prf acco
+   68 BOUCLEWHILE: . WHILE WLS list_inst ACCF
+   69 WHILE: . mc_while pro
+
+    mc_if     shift, and go to state 62
+    mc_for    shift, and go to state 63
+    mc_while  shift, and go to state 64
+    idf       shift, and go to state 65
+
+    $default  reduce using rule 25 (list_inst)
+
+    list_inst    go to state 88
+    INST         go to state 67
+    affectation  go to state 68
+    CONDITION    go to state 69
+    IF           go to state 70
+    BOUCLEFOR    go to state 71
+    FOR          go to state 72
+    BOUCLEWHILE  go to state 73
+    WHILE        go to state 74
+
+
+State 73
+
+   29 INST: BOUCLEWHILE .
+
+    $default  reduce using rule 29 (INST)
+
+
+State 74
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   52 cond: . comparaison
+   53     | . expressionLog
+   54 comparaison: . expressionAr sup expressionAr
+   55            | . expressionAr inf expressionAr
+   56            | . expressionAr egal expressionAr
+   57            | . expressionAr diff expressionAr
+   58            | . expressionAr supegl expressionAr
+   59            | . expressionAr infegl expressionAr
+   60 expressionLog: . pro comparaison prf operateurLog pro comparaison prf
+   61              | . expressionAr operateurLog expressionAr
+   62              | . NOT expressionAr
+   68 BOUCLEWHILE: WHILE . WLS list_inst ACCF
+   70 WLS: . cond prf acco
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 92
+    NOT     shift, and go to state 93
+
+    expressionAr   go to state 94
+    cond           go to state 95
+    comparaison    go to state 96
+    expressionLog  go to state 97
+    WLS            go to state 98
+
+
+State 75
+
+   10 TabDEC: mc_integer idf crochero entier crocherf pvg .
+
+    $default  reduce using rule 10 (TabDEC)
+
+
+State 76
+
+   11 TabDEC: mc_float idf crochero entier crocherf pvg .
+
+    $default  reduce using rule 11 (TabDEC)
+
+
+State 77
+
+   23 LISTSTRUCT: idf crochero entier crocherf .
+
+    $default  reduce using rule 23 (LISTSTRUCT)
+
+
+State 78
+
+   15 STRUCTURE: mc_struct acco DEC accf idf pvg .
+
+    $default  reduce using rule 15 (STRUCTURE)
+
+
+State 79
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   47 IF: mc_if pro . cond prf acco
+   52 cond: . comparaison
+   53     | . expressionLog
+   54 comparaison: . expressionAr sup expressionAr
+   55            | . expressionAr inf expressionAr
+   56            | . expressionAr egal expressionAr
+   57            | . expressionAr diff expressionAr
+   58            | . expressionAr supegl expressionAr
+   59            | . expressionAr infegl expressionAr
+   60 expressionLog: . pro comparaison prf operateurLog pro comparaison prf
+   61              | . expressionAr operateurLog expressionAr
+   62              | . NOT expressionAr
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 92
+    NOT     shift, and go to state 93
+
+    expressionAr   go to state 94
+    cond           go to state 99
+    comparaison    go to state 96
+    expressionLog  go to state 97
+
+
+State 80
+
+   66 FOR: mc_for pro . idf dpts entier dpts entier dpts idf prf acco
+
+    idf  shift, and go to state 100
+
+
+State 81
+
+   69 WHILE: mc_while pro .
+
+    $default  reduce using rule 69 (WHILE)
+
+
+State 82
+
+   30 affectation: idf aff . expressionAr pvg
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 102
+
+
+State 83
+
+   31 affectation: idf pts . idf aff expressionAr pvg
+
+    idf  shift, and go to state 103
+
+
+State 84
+
+   32 affectation: idf crochero . idf crocherf aff expressionAr pvg
+   33            | idf crochero . entier crocherf aff expressionAr pvg
+
+    idf     shift, and go to state 104
+    entier  shift, and go to state 105
+
+
+State 85
+
+    1 S: idf acco mc_var acco DEC accf mc_code acco list_inst accf . accf
+
+    accf  shift, and go to state 106
+
+
+State 86
+
+   24 list_inst: INST list_inst .
+
+    $default  reduce using rule 24 (list_inst)
+
+
+State 87
+
+   45 CONDITION: IF list_inst . ACCF_SIMPLE
+   46          | IF list_inst . ACCF_IF ELSE list_inst ACCF_ELSE
+   48 ACCF_SIMPLE: . accf
+   50 ACCF_IF: . accf
+
+    accf  shift, and go to state 107
+
+    ACCF_SIMPLE  go to state 108
+    ACCF_IF      go to state 109
+
+
+State 88
+
+   65 BOUCLEFOR: FOR list_inst . ACCF1
+   67 ACCF1: . accf
+
+    accf  shift, and go to state 110
+
+    ACCF1  go to state 111
+
+
+State 89
+
+   38 expressionAr: idf .
+   41             | idf . crochero entier crocherf
+   42             | idf . crochero idf crocherf
+   43             | idf . pts idf
+
+    pts       shift, and go to state 112
+    crochero  shift, and go to state 113
+
+    $default  reduce using rule 38 (expressionAr)
+
+
+State 90
+
+   39 expressionAr: entier .
+
+    $default  reduce using rule 39 (expressionAr)
+
+
+State 91
+
+   40 expressionAr: reel .
+
+    $default  reduce using rule 40 (expressionAr)
+
+
+State 92
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   44             | pro . expressionAr prf
+   54 comparaison: . expressionAr sup expressionAr
+   55            | . expressionAr inf expressionAr
+   56            | . expressionAr egal expressionAr
+   57            | . expressionAr diff expressionAr
+   58            | . expressionAr supegl expressionAr
+   59            | . expressionAr infegl expressionAr
+   60 expressionLog: pro . comparaison prf operateurLog pro comparaison prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 114
+    comparaison   go to state 115
+
+
+State 93
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   62 expressionLog: NOT . expressionAr
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 116
+
+
+State 94
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   54 comparaison: expressionAr . sup expressionAr
+   55            | expressionAr . inf expressionAr
+   56            | expressionAr . egal expressionAr
+   57            | expressionAr . diff expressionAr
+   58            | expressionAr . supegl expressionAr
+   59            | expressionAr . infegl expressionAr
+   61 expressionLog: expressionAr . operateurLog expressionAr
+   63 operateurLog: . ET
+   64             | . OU
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+    ET        shift, and go to state 121
+    OU        shift, and go to state 122
+    inf       shift, and go to state 123
+    sup       shift, and go to state 124
+    infegl    shift, and go to state 125
+    supegl    shift, and go to state 126
+    egal      shift, and go to state 127
+    diff      shift, and go to state 128
+
+    operateurLog  go to state 129
+
+
+State 95
+
+   70 WLS: cond . prf acco
+
+    prf  shift, and go to state 130
+
+
+State 96
+
+   52 cond: comparaison .
+
+    $default  reduce using rule 52 (cond)
+
+
+State 97
+
+   53 cond: expressionLog .
+
+    $default  reduce using rule 53 (cond)
+
+
+State 98
+
+   24 list_inst: . INST list_inst
+   25          | .
+   26 INST: . affectation
+   27     | . CONDITION
+   28     | . BOUCLEFOR
+   29     | . BOUCLEWHILE
+   30 affectation: . idf aff expressionAr pvg
+   31            | . idf pts idf aff expressionAr pvg
+   32            | . idf crochero idf crocherf aff expressionAr pvg
+   33            | . idf crochero entier crocherf aff expressionAr pvg
+   45 CONDITION: . IF list_inst ACCF_SIMPLE
+   46          | . IF list_inst ACCF_IF ELSE list_inst ACCF_ELSE
+   47 IF: . mc_if pro cond prf acco
+   65 BOUCLEFOR: . FOR list_inst ACCF1
+   66 FOR: . mc_for pro idf dpts entier dpts entier dpts idf prf acco
+   68 BOUCLEWHILE: . WHILE WLS list_inst ACCF
+   68            | WHILE WLS . list_inst ACCF
+   69 WHILE: . mc_while pro
+
+    mc_if     shift, and go to state 62
+    mc_for    shift, and go to state 63
+    mc_while  shift, and go to state 64
+    idf       shift, and go to state 65
+
+    $default  reduce using rule 25 (list_inst)
+
+    list_inst    go to state 131
+    INST         go to state 67
+    affectation  go to state 68
+    CONDITION    go to state 69
+    IF           go to state 70
+    BOUCLEFOR    go to state 71
+    FOR          go to state 72
+    BOUCLEWHILE  go to state 73
+    WHILE        go to state 74
+
+
+State 99
+
+   47 IF: mc_if pro cond . prf acco
+
+    prf  shift, and go to state 132
+
+
+State 100
+
+   66 FOR: mc_for pro idf . dpts entier dpts entier dpts idf prf acco
+
+    dpts  shift, and go to state 133
+
+
+State 101
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   44             | pro . expressionAr prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 134
+
+
+State 102
+
+   30 affectation: idf aff expressionAr . pvg
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+    pvg       shift, and go to state 135
+
+
+State 103
+
+   31 affectation: idf pts idf . aff expressionAr pvg
+
+    aff  shift, and go to state 136
+
+
+State 104
+
+   32 affectation: idf crochero idf . crocherf aff expressionAr pvg
+
+    crocherf  shift, and go to state 137
+
+
+State 105
+
+   33 affectation: idf crochero entier . crocherf aff expressionAr pvg
+
+    crocherf  shift, and go to state 138
+
+
+State 106
+
+    1 S: idf acco mc_var acco DEC accf mc_code acco list_inst accf accf .
+
+    $default  reduce using rule 1 (S)
+
+
+State 107
+
+   48 ACCF_SIMPLE: accf .
+   50 ACCF_IF: accf .
+
+    mc_else   reduce using rule 50 (ACCF_IF)
+    $default  reduce using rule 48 (ACCF_SIMPLE)
+
+
+State 108
+
+   45 CONDITION: IF list_inst ACCF_SIMPLE .
+
+    $default  reduce using rule 45 (CONDITION)
+
+
+State 109
+
+   46 CONDITION: IF list_inst ACCF_IF . ELSE list_inst ACCF_ELSE
+   49 ELSE: . mc_else acco
+
+    mc_else  shift, and go to state 139
+
+    ELSE  go to state 140
+
+
+State 110
+
+   67 ACCF1: accf .
+
+    $default  reduce using rule 67 (ACCF1)
+
+
+State 111
+
+   65 BOUCLEFOR: FOR list_inst ACCF1 .
+
+    $default  reduce using rule 65 (BOUCLEFOR)
+
+
+State 112
+
+   43 expressionAr: idf pts . idf
+
+    idf  shift, and go to state 141
+
+
+State 113
+
+   41 expressionAr: idf crochero . entier crocherf
+   42             | idf crochero . idf crocherf
+
+    idf     shift, and go to state 142
+    entier  shift, and go to state 143
+
+
+State 114
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   44             | pro expressionAr . prf
+   54 comparaison: expressionAr . sup expressionAr
+   55            | expressionAr . inf expressionAr
+   56            | expressionAr . egal expressionAr
+   57            | expressionAr . diff expressionAr
+   58            | expressionAr . supegl expressionAr
+   59            | expressionAr . infegl expressionAr
+
+    prf       shift, and go to state 144
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+    inf       shift, and go to state 123
+    sup       shift, and go to state 124
+    infegl    shift, and go to state 125
+    supegl    shift, and go to state 126
+    egal      shift, and go to state 127
+    diff      shift, and go to state 128
+
+
+State 115
+
+   60 expressionLog: pro comparaison . prf operateurLog pro comparaison prf
+
+    prf  shift, and go to state 145
+
+
+State 116
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   62 expressionLog: NOT expressionAr .
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 62 (expressionLog)
+
+
+State 117
+
+   34 expressionAr: . expressionAr add expressionAr
+   34             | expressionAr add . expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 146
+
+
+State 118
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   35             | expressionAr sub . expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 147
+
+
+State 119
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   36             | expressionAr division . expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 148
+
+
+State 120
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   37             | expressionAr mul . expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 149
+
+
+State 121
+
+   63 operateurLog: ET .
+
+    $default  reduce using rule 63 (operateurLog)
+
+
+State 122
+
+   64 operateurLog: OU .
+
+    $default  reduce using rule 64 (operateurLog)
+
+
+State 123
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   55 comparaison: expressionAr inf . expressionAr
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 150
+
+
+State 124
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   54 comparaison: expressionAr sup . expressionAr
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 151
+
+
+State 125
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   59 comparaison: expressionAr infegl . expressionAr
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 152
+
+
+State 126
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   58 comparaison: expressionAr supegl . expressionAr
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 153
+
+
+State 127
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   56 comparaison: expressionAr egal . expressionAr
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 154
+
+
+State 128
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   57 comparaison: expressionAr diff . expressionAr
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 155
+
+
+State 129
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   61 expressionLog: expressionAr operateurLog . expressionAr
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 156
+
+
+State 130
+
+   70 WLS: cond prf . acco
+
+    acco  shift, and go to state 157
+
+
+State 131
+
+   68 BOUCLEWHILE: WHILE WLS list_inst . ACCF
+   71 ACCF: . accf
+
+    accf  shift, and go to state 158
+
+    ACCF  go to state 159
+
+
+State 132
+
+   47 IF: mc_if pro cond prf . acco
+
+    acco  shift, and go to state 160
+
+
+State 133
+
+   66 FOR: mc_for pro idf dpts . entier dpts entier dpts idf prf acco
+
+    entier  shift, and go to state 161
+
+
+State 134
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   44             | pro expressionAr . prf
+
+    prf       shift, and go to state 144
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+
+State 135
+
+   30 affectation: idf aff expressionAr pvg .
+
+    $default  reduce using rule 30 (affectation)
+
+
+State 136
+
+   31 affectation: idf pts idf aff . expressionAr pvg
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 162
+
+
+State 137
+
+   32 affectation: idf crochero idf crocherf . aff expressionAr pvg
+
+    aff  shift, and go to state 163
+
+
+State 138
+
+   33 affectation: idf crochero entier crocherf . aff expressionAr pvg
+
+    aff  shift, and go to state 164
+
+
+State 139
+
+   49 ELSE: mc_else . acco
+
+    acco  shift, and go to state 165
+
+
+State 140
+
+   24 list_inst: . INST list_inst
+   25          | .
+   26 INST: . affectation
+   27     | . CONDITION
+   28     | . BOUCLEFOR
+   29     | . BOUCLEWHILE
+   30 affectation: . idf aff expressionAr pvg
+   31            | . idf pts idf aff expressionAr pvg
+   32            | . idf crochero idf crocherf aff expressionAr pvg
+   33            | . idf crochero entier crocherf aff expressionAr pvg
+   45 CONDITION: . IF list_inst ACCF_SIMPLE
+   46          | . IF list_inst ACCF_IF ELSE list_inst ACCF_ELSE
+   46          | IF list_inst ACCF_IF ELSE . list_inst ACCF_ELSE
+   47 IF: . mc_if pro cond prf acco
+   65 BOUCLEFOR: . FOR list_inst ACCF1
+   66 FOR: . mc_for pro idf dpts entier dpts entier dpts idf prf acco
+   68 BOUCLEWHILE: . WHILE WLS list_inst ACCF
+   69 WHILE: . mc_while pro
+
+    mc_if     shift, and go to state 62
+    mc_for    shift, and go to state 63
+    mc_while  shift, and go to state 64
+    idf       shift, and go to state 65
+
+    $default  reduce using rule 25 (list_inst)
+
+    list_inst    go to state 166
+    INST         go to state 67
+    affectation  go to state 68
+    CONDITION    go to state 69
+    IF           go to state 70
+    BOUCLEFOR    go to state 71
+    FOR          go to state 72
+    BOUCLEWHILE  go to state 73
+    WHILE        go to state 74
+
+
+State 141
+
+   43 expressionAr: idf pts idf .
+
+    $default  reduce using rule 43 (expressionAr)
+
+
+State 142
+
+   42 expressionAr: idf crochero idf . crocherf
+
+    crocherf  shift, and go to state 167
+
+
+State 143
+
+   41 expressionAr: idf crochero entier . crocherf
+
+    crocherf  shift, and go to state 168
+
+
+State 144
+
+   44 expressionAr: pro expressionAr prf .
+
+    $default  reduce using rule 44 (expressionAr)
+
+
+State 145
+
+   60 expressionLog: pro comparaison prf . operateurLog pro comparaison prf
+   63 operateurLog: . ET
+   64             | . OU
+
+    ET  shift, and go to state 121
+    OU  shift, and go to state 122
+
+    operateurLog  go to state 169
+
+
+State 146
+
+   34 expressionAr: expressionAr . add expressionAr
+   34             | expressionAr add expressionAr .
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 34 (expressionAr)
+
+
+State 147
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   35             | expressionAr sub expressionAr .
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 35 (expressionAr)
+
+
+State 148
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   36             | expressionAr division expressionAr .
+   37             | expressionAr . mul expressionAr
+
+    $default  reduce using rule 36 (expressionAr)
+
+
+State 149
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   37             | expressionAr mul expressionAr .
+
+    $default  reduce using rule 37 (expressionAr)
+
+
+State 150
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   55 comparaison: expressionAr inf expressionAr .
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 55 (comparaison)
+
+
+State 151
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   54 comparaison: expressionAr sup expressionAr .
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 54 (comparaison)
+
+
+State 152
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   59 comparaison: expressionAr infegl expressionAr .
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 59 (comparaison)
+
+
+State 153
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   58 comparaison: expressionAr supegl expressionAr .
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 58 (comparaison)
+
+
+State 154
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   56 comparaison: expressionAr egal expressionAr .
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 56 (comparaison)
+
+
+State 155
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   57 comparaison: expressionAr diff expressionAr .
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 57 (comparaison)
+
+
+State 156
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   61 expressionLog: expressionAr operateurLog expressionAr .
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+
+    $default  reduce using rule 61 (expressionLog)
+
+
+State 157
+
+   70 WLS: cond prf acco .
+
+    $default  reduce using rule 70 (WLS)
+
+
+State 158
+
+   71 ACCF: accf .
+
+    $default  reduce using rule 71 (ACCF)
+
+
+State 159
+
+   68 BOUCLEWHILE: WHILE WLS list_inst ACCF .
+
+    $default  reduce using rule 68 (BOUCLEWHILE)
+
+
+State 160
+
+   47 IF: mc_if pro cond prf acco .
+
+    $default  reduce using rule 47 (IF)
+
+
+State 161
+
+   66 FOR: mc_for pro idf dpts entier . dpts entier dpts idf prf acco
+
+    dpts  shift, and go to state 170
+
+
+State 162
+
+   31 affectation: idf pts idf aff expressionAr . pvg
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+    pvg       shift, and go to state 171
+
+
+State 163
+
+   32 affectation: idf crochero idf crocherf aff . expressionAr pvg
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 172
+
+
+State 164
+
+   33 affectation: idf crochero entier crocherf aff . expressionAr pvg
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 173
+
+
+State 165
+
+   49 ELSE: mc_else acco .
+
+    $default  reduce using rule 49 (ELSE)
+
+
+State 166
+
+   46 CONDITION: IF list_inst ACCF_IF ELSE list_inst . ACCF_ELSE
+   51 ACCF_ELSE: . accf
+
+    accf  shift, and go to state 174
+
+    ACCF_ELSE  go to state 175
+
+
+State 167
+
+   42 expressionAr: idf crochero idf crocherf .
+
+    $default  reduce using rule 42 (expressionAr)
+
+
+State 168
+
+   41 expressionAr: idf crochero entier crocherf .
+
+    $default  reduce using rule 41 (expressionAr)
+
+
+State 169
+
+   60 expressionLog: pro comparaison prf operateurLog . pro comparaison prf
+
+    pro  shift, and go to state 176
+
+
+State 170
+
+   66 FOR: mc_for pro idf dpts entier dpts . entier dpts idf prf acco
+
+    entier  shift, and go to state 177
+
+
+State 171
+
+   31 affectation: idf pts idf aff expressionAr pvg .
+
+    $default  reduce using rule 31 (affectation)
+
+
+State 172
+
+   32 affectation: idf crochero idf crocherf aff expressionAr . pvg
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+    pvg       shift, and go to state 178
+
+
+State 173
+
+   33 affectation: idf crochero entier crocherf aff expressionAr . pvg
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+    pvg       shift, and go to state 179
+
+
+State 174
+
+   51 ACCF_ELSE: accf .
+
+    $default  reduce using rule 51 (ACCF_ELSE)
+
+
+State 175
+
+   46 CONDITION: IF list_inst ACCF_IF ELSE list_inst ACCF_ELSE .
+
+    $default  reduce using rule 46 (CONDITION)
+
+
+State 176
+
+   34 expressionAr: . expressionAr add expressionAr
+   35             | . expressionAr sub expressionAr
+   36             | . expressionAr division expressionAr
+   37             | . expressionAr mul expressionAr
+   38             | . idf
+   39             | . entier
+   40             | . reel
+   41             | . idf crochero entier crocherf
+   42             | . idf crochero idf crocherf
+   43             | . idf pts idf
+   44             | . pro expressionAr prf
+   54 comparaison: . expressionAr sup expressionAr
+   55            | . expressionAr inf expressionAr
+   56            | . expressionAr egal expressionAr
+   57            | . expressionAr diff expressionAr
+   58            | . expressionAr supegl expressionAr
+   59            | . expressionAr infegl expressionAr
+   60 expressionLog: pro comparaison prf operateurLog pro . comparaison prf
+
+    idf     shift, and go to state 89
+    entier  shift, and go to state 90
+    reel    shift, and go to state 91
+    pro     shift, and go to state 101
+
+    expressionAr  go to state 180
+    comparaison   go to state 181
+
+
+State 177
+
+   66 FOR: mc_for pro idf dpts entier dpts entier . dpts idf prf acco
+
+    dpts  shift, and go to state 182
+
+
+State 178
+
+   32 affectation: idf crochero idf crocherf aff expressionAr pvg .
+
+    $default  reduce using rule 32 (affectation)
+
+
+State 179
+
+   33 affectation: idf crochero entier crocherf aff expressionAr pvg .
+
+    $default  reduce using rule 33 (affectation)
+
+
+State 180
+
+   34 expressionAr: expressionAr . add expressionAr
+   35             | expressionAr . sub expressionAr
+   36             | expressionAr . division expressionAr
+   37             | expressionAr . mul expressionAr
+   54 comparaison: expressionAr . sup expressionAr
+   55            | expressionAr . inf expressionAr
+   56            | expressionAr . egal expressionAr
+   57            | expressionAr . diff expressionAr
+   58            | expressionAr . supegl expressionAr
+   59            | expressionAr . infegl expressionAr
+
+    add       shift, and go to state 117
+    sub       shift, and go to state 118
+    division  shift, and go to state 119
+    mul       shift, and go to state 120
+    inf       shift, and go to state 123
+    sup       shift, and go to state 124
+    infegl    shift, and go to state 125
+    supegl    shift, and go to state 126
+    egal      shift, and go to state 127
+    diff      shift, and go to state 128
+
+
+State 181
+
+   60 expressionLog: pro comparaison prf operateurLog pro comparaison . prf
+
+    prf  shift, and go to state 183
+
+
+State 182
+
+   66 FOR: mc_for pro idf dpts entier dpts entier dpts . idf prf acco
+
+    idf  shift, and go to state 184
+
+
+State 183
+
+   60 expressionLog: pro comparaison prf operateurLog pro comparaison prf .
+
+    $default  reduce using rule 60 (expressionLog)
+
+
+State 184
+
+   66 FOR: mc_for pro idf dpts entier dpts entier dpts idf . prf acco
+
+    prf  shift, and go to state 185
+
+
+State 185
+
+   66 FOR: mc_for pro idf dpts entier dpts entier dpts idf prf . acco
+
+    acco  shift, and go to state 186
+
+
+State 186
+
+   66 FOR: mc_for pro idf dpts entier dpts entier dpts idf prf acco .
+
+    $default  reduce using rule 66 (FOR)

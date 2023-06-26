@@ -1,0 +1,47 @@
+prog
+{
+VAR
+{
+FLOAT y;
+INTEGER x;
+
+INTEGER z,e,A,B,Aa,Bb,n,t8,j,X;
+STRUCT a v1;
+
+CONST o=6;
+CONST i=(-6);
+CONST c=6.2;
+CONST v=(-6.2);
+INTEGER ws;
+
+
+
+
+
+}
+CODE
+{
+ 
+FOR (X : 0: 2 :n) { 
+x=x+2; 
+}
+x=5+6;
+x=3;
+
+FOR (X : 0: 2 :n) { 
+          FOR (X : 0: 2 :n) { 
+          IF(A == 2){
+            A=5*5;
+          }
+          }
+        }
+
+
+}    
+
+
+
+}
+
+
+

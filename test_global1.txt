@@ -1,0 +1,106 @@
+prog
+{
+    
+
+VAR
+{
+FLOAT y;
+INTEGER x;%%ceci est un commentaire
+INTEGER Tab[20];
+FLOAT RAY[500];
+INTEGER z,e,A,B,Aa,Bb,n,t8,j,X;
+STRUCT a v1, v2;
+
+CONST o=6;
+CONST i=(-6);
+CONST c=6.2;
+CONST v=(-6.2);
+INTEGER ws;
+
+STRUCT { 
+INTEGER t; 
+FLOAT r; 
+} a;
+
+
+
+%%STRUCT NomStr Var1, Var2;
+%%Var1.nom; 
+
+}
+CODE
+{
+    Tab[ws]=Aa;
+    Tab[ws]=(A *(-5))/2 ;
+%%modification constante i=3;    
+%%x=3.3;
+v1.t=x*3;
+%% modification constante v=2.2;
+x =3;
+x=5+6;
+y=7.0+6.0;
+x=6+3+9;
+
+IF (Aa > Bb){ 
+ IF (Aa > Bb){ 
+ A=5;
+} 
+ELSE{ 
+ B=2;
+}
+} 
+ELSE{ 
+ B=2;
+} 
+
+A=A*2;
+t8 = 5+6;
+
+
+
+
+WHILE ((i<n)&&(Aa != 3)) { 
+ A=10;
+ A=6;
+}    
+WHILE ((i<n)&&(Aa != 3)) { 
+ y=0.0;
+ A=3;
+}    
+WHILE ((i<n)&&(Aa != 3)) { 
+ 
+ A=5;
+}   
+
+
+FOR (X : 0: 2 :n) { 
+x=x+2; 
+}
+
+z=z+2;
+IF (x<i) {
+    IF(Aa>Bb){
+        Aa=3;
+    }
+    ELSE{
+        Bb=3;
+    }
+}
+ELSE{
+    x=x*4;
+}
+
+
+FOR (X : 0: 2 :n) { 
+    FOR(e : 0: 1 :n){
+        e=e+1;
+    }
+x=x+2; 
+}
+
+x=3;
+}
+}
+
+
+

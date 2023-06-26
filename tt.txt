@@ -1,0 +1,61 @@
+prog
+{
+VAR
+{
+FLOAT y;
+INTEGER x;%%ceci est un commentaire
+INTEGER Tab[20];
+INTEGER z,e,A,B,Aa,Bb,n,X,K;
+
+
+CONST o=6;
+CONST i=(-6);
+CONST c=6.2;
+CONST v=(-6.2);
+
+STRUCT { 
+INTEGER nomelt1; 
+INTEGER nomelt2; 
+} Enreg;
+
+STRUCT Enreg R[50];
+
+STRUCT Enreg Var1, Var2;
+%%Var1.nom; 
+
+}
+CODE
+    {
+
+        Tab[1]=x*2;
+        A=((X/4)+K-(K*5))/K-K;
+        x =3;
+        x=5+6;
+        y=7.0+6.0;
+        %%x=6+3/(9+3-12);
+        z=z+i;
+         
+     FOR (X : 0: 2 :n) { 
+          FOR (X : 0: 2 :n) { 
+          IF(A == 2){
+            A=5*5;
+          }
+          }
+        }
+
+
+
+        WHILE ((i<n)&&(Aa != 3)) {
+             WHILE (i>n){
+            y=0.0;
+            A=3;
+        }   
+        }
+
+
+        
+        IF(A==2){
+            A=3;
+          }
+    }
+}
